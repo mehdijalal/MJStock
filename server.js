@@ -1,29 +1,31 @@
 import express from 'express';
-import schema from './schema/schema';
+import schema from './data/schema';
 //const { graphqlHTTP } = require('express-graphql');
 import {graphqlHTTP}  from 'express-graphql';
-
+import {schema} from './data/schema';
 
  
 //var root = { hello: () => 'Hello world!' };
 //-----it should come from database---------------//
-var root = { stocks: ()=>{
-   return {
-    "id": 2333344,
-    "symbol": "AAL",
-    "name": "American Airlines Group, Inc.",
-    "lastprice": 15.97,
-    "industry": "Industrials",
-    "type": "Stocks",
-    "exchange": "NMS"
-   }
+// var root = { stocks: ()=>{
+//    return {
+//     "id": 2333344,
+//     "symbol": "AAL",
+//     "name": "American Airlines Group, Inc.",
+//     "lastprice": 15.97,
+//     "industry": "Industrials",
+//     "type": "Stocks",
+//     "exchange": "NMS"
+//    }
     
-}};
+// }};
  
+app.get('/',(req,res)=>{
+  res.send('----Hi Graphql works great--------');
+})
 var app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
   graphiql: true,
 }));
-app.listen(4000, () => console.log('Now browse to localhost:4000/graphql'));
+app.listen(4500, () => console.log('Now browse to localhost:4500/graphql'));

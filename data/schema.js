@@ -1,10 +1,12 @@
-import {buildSchema} from 'graphql';
+import {makeExecutableSchema, makeRemoteExecutableSchema} from 'graphql-tools';
+import {resolvers} from './resolvers';
+
 // const schema = buildSchema(`
 //   type Query {
 //     hello: String
 //   }
 // `);
-const schema = buildSchema(`
+const typeDefs=`
   type Stocks {
     id: ID
     symbol: String
@@ -16,8 +18,9 @@ const schema = buildSchema(`
     
   }
 
+
   type Query {
-      stocks: Stocks
+    getStock(id:ID):Stocks
   }
 
   input StocksInput{
@@ -30,9 +33,15 @@ const schema = buildSchema(`
     exchange: String
   }
 
+  input ContactInput{
+    firstName: String
+    lastName: String
+  }
+
   type Mutation {
       createStocks(input: StocksInput):Stocks
   }
-`);
+`;
 
-export default schema;
+const schema = makeExecutableSchema({typeDefs, resolvers});
+export {schema};
